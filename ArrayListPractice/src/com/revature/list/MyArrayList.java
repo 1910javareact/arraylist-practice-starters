@@ -1,5 +1,7 @@
 package com.revature.list;
 
+import java.util.Arrays;
+
 public class MyArrayList {
 	int size = 0;
 	int capacity = 10;
@@ -11,41 +13,53 @@ public class MyArrayList {
 		size++;
 		if (size >= capacity) {
 			capacity *= 2;
-			int[] arr2 = new int[capacity];
-			for (int i = 0; i < arr.length; i++) {
-				arr2[i] = arr[i];
-			}
-			arr = arr2;
+			arr = Arrays.copyOf(arr, capacity);
 		}
 	}
 
 	public void set(int index, int val) {
 		// TODO Auto-generated method stub
+		if (index > size || index < 0) {
+			return;
+		}
 		arr[index] = val;
 	}
 
 	public void remove(int index) {
 		// TODO Auto-generated method stub
+		if (index > size || index < 0) {
+			return;
+		}
 		size--;
-		for (int i = index; i < arr.length-1; i++) {
+		for (int i = index; i < size-1; i++) {
 			arr[i] = arr[i+1];
 		}
 	}
 
 	public int get(int index) {
 		// TODO Auto-generated method stub
+		if (index > size || index < 0) {
+			throw new RuntimeException("Index out of bounce");
+		}
 		return arr[index];
 	}
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		System.out.print("{ ");
-		for (int i = 0; i < arr.length; i++) {
-			System.out.print(arr[i] + ",");
+		StringBuilder test = new StringBuilder();
+		test.append("{ ");
+		//String output = "{ ";
+		for (int i = 0; i < size; i++) {
+			//output += arr[i];
+			test.append(arr[i]);
+			if(i < size-1) {
+				//output += ", ";
+				test.append(", ");
+			}
 		}
-		System.out.print("} ");
-		
-		return null;
+		//output += " }";
+		test.append(" }");
+		return test.toString();
 	}
 }
